@@ -1,0 +1,15 @@
+```mermaid
+sequenceDiagram
+    participant Src as Video Source
+    participant S3 as S3 Bucket
+    participant MC as MediaConvert
+    participant Rek as Rekognition
+    participant DB as DynamoDB
+
+    Src->>S3: Upload video
+    S3->>MC: Trigger transcoding
+    MC->>S3: Store frames
+    S3->>Rek: Analyze frames
+    Rek->>DB: Store detections
+    DB-->>Src: Return results
+```

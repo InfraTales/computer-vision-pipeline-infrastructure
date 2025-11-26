@@ -1,0 +1,36 @@
+```mermaid
+graph LR
+    subgraph Ingest["Ingestion"]
+        Video[Video Files]
+        Live[Live Streams]
+    end
+
+    subgraph Transform["Transform"]
+        Transcode[Transcode]
+        Extract[Frame Extract]
+    end
+
+    subgraph Analyze["Analysis"]
+        Objects[Object Detection]
+        Faces[Face Recognition]
+        Custom[Custom ML]
+    end
+
+    subgraph Store["Storage"]
+        Metadata[Metadata DB]
+        Search[Search Index]
+        Archive[Archive]
+    end
+
+    Video --> Transcode
+    Live --> Extract
+    Transcode --> Extract
+    Extract --> Objects
+    Extract --> Faces
+    Extract --> Custom
+    Objects --> Metadata
+    Faces --> Metadata
+    Custom --> Metadata
+    Metadata --> Search
+    Metadata --> Archive
+```

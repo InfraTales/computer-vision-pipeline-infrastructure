@@ -1,0 +1,39 @@
+```mermaid
+graph TD
+    subgraph Input["Video Input"]
+        Upload[S3 Upload]
+        Stream[Kinesis Video]
+        RTSP[RTSP Cameras]
+    end
+
+    subgraph Process["Processing"]
+        MediaConvert[MediaConvert]
+        Lambda[Frame Extraction]
+        Rekognition[Rekognition]
+        SageMaker[Custom Models]
+    end
+
+    subgraph Output["Results"]
+        DDB[DynamoDB]
+        OpenSearch[OpenSearch]
+        S3Out[S3 Results]
+    end
+
+    subgraph Notify["Notifications"]
+        SNS[SNS Alerts]
+        EventBridge[EventBridge]
+    end
+
+    Upload --> MediaConvert
+    Stream --> Lambda
+    RTSP --> Stream
+    MediaConvert --> Lambda
+    Lambda --> Rekognition
+    Lambda --> SageMaker
+    Rekognition --> DDB
+    SageMaker --> DDB
+    DDB --> OpenSearch
+    DDB --> S3Out
+    Rekognition --> SNS
+    SNS --> EventBridge
+```
