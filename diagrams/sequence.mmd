@@ -1,4 +1,3 @@
-```mermaid
 sequenceDiagram
     participant Src as Video Source
     participant S3 as S3 Bucket
@@ -12,4 +11,3 @@ sequenceDiagram
     S3->>Rek: Analyze frames
     Rek->>DB: Store detections
     DB-->>Src: Return results
-```
